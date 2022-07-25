@@ -43,7 +43,7 @@ public class addQuizQA {
         comboQuestion.FillComboBoxQuiz(questionsOP);
         ObservableList<String> optionsQ = FXCollections.observableArrayList(questionsOP);
         ComboBox<String> questions = new ComboBox<String>();
-        questions.setItems(optionsQ); //értékek beállítása
+        questions.setItems(optionsQ);
         TextField questionTF = new TextField();
 
         ToggleGroup group = new ToggleGroup();
@@ -61,55 +61,11 @@ public class addQuizQA {
         cBox5.setToggleGroup(group2);
 
         QuizDaoDB user = new QuizDaoDB();
-        App azon = new App();
         String azonSt = App.getAzonosito();
         Button saveQuestion = new Button("Kérdés mentése");
+
         saveQuestion.setOnAction(e-> {
-            creatorOL.clear();
-            user.queryQuizCreator(creatorOL, questions.getValue());
-
-            if (azonSt.equals(creatorOL.get(0).toString())) {
-                if (questions.getValue() == null) {
-                       showWarning("A mező üres");
-                       return;
-                 }
-              quiz.setQuiz_name_kerd(questions.getValue());
-
-              if (questionTF.getText().isEmpty()) {
-                    showWarning("A mező üres");
-                    return;
-              }
-             quiz.setKerdes(questionTF.getText());
-
-             if (!cBox1.isSelected() && !cBox2.isSelected() && !cBox3.isSelected()) {
-                    showWarning("A mező üres!");
-                    return;
-              }
-             if (cBox1.isSelected()) {
-                 if(!cBox4.isSelected() && !cBox5.isSelected()){
-                     showWarning("A mező üres!");
-                     return;
-                 }
-                 else{
-                     if(cBox4.isSelected()){
-                         quiz.setTipus("TextOne");
-                     }
-                     if(cBox5.isSelected()){
-                         quiz.setTipus("TextMore");
-                     }
-                 }
-             } else if (cBox2.isSelected()) {
-                    quiz.setTipus("Date");
-             } else if (cBox3.isSelected()) {
-                    quiz.setTipus("Empty");
-             }
-
-                quizDB.AddQuestion(quiz);
-                questionTF.clear();
-            }else{
-                showWarning("Nincs jogosultsága a szerkesztésre!");
-                return;
-            }
+            quizCreator(quiz, quizDB, questions, questionTF, cBox1, cBox2, cBox3, cBox4, cBox5, user, azonSt);
         });
 
         questionGP.add(new Text("Kérdőív választása"),0,0);
@@ -209,6 +165,54 @@ public class addQuizQA {
         stage.setScene(scene);
         stage.setTitle("Kérdés & Válasz hozzáadása");
         stage.show();
+    }
+
+    private void quizCreator(Quiz quiz, QuizDaoDB quizDB, ComboBox<String> questions, TextField questionTF, RadioButton cBox1, RadioButton cBox2, RadioButton cBox3, RadioButton cBox4, RadioButton cBox5, QuizDaoDB user, String azonSt) {
+        creatorOL.clear();
+        user.queryQuizCreator(creatorOL, questions.getValue());
+
+        if (azonSt.equals(creatorOL.get(0).toString())) {
+            if (questions.getValue() == null) {
+                   showWarning("A mező üres");
+                return;
+             }
+          quiz.setQuiz_name_kerd(questions.getValue());
+
+          if (questionTF.getText().isEmpty()) {
+                showWarning("A mező üres");
+              return;
+          }
+         quiz.setKerdes(questionTF.getText());
+
+         if (!cBox1.isSelected() && !cBox2.isSelected() && !cBox3.isSelected()) {
+                showWarning("A mező üres!");
+             return;
+          }
+         if (cBox1.isSelected()) {
+             if(!cBox4.isSelected() && !cBox5.isSelected()){
+                 showWarning("A mező üres!");
+                 return;
+             }
+             else{
+                 if(cBox4.isSelected()){
+                     quiz.setTipus("TextOne");
+                 }
+                 if(cBox5.isSelected()){
+                     quiz.setTipus("TextMore");
+                 }
+             }
+         } else if (cBox2.isSelected()) {
+                quiz.setTipus("Date");
+         } else if (cBox3.isSelected()) {
+                quiz.setTipus("Empty");
+         }
+
+            quizDB.AddQuestion(quiz);
+            questionTF.clear();
+        }else{
+            showWarning("Nincs jogosultsága a szerkesztésre!");
+            return;
+        }
     }
 
     private HBox getHBox() {

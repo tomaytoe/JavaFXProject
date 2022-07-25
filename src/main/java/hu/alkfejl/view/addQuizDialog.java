@@ -32,8 +32,6 @@ public class addQuizDialog {
     private final MenuBar menuBar = new MenuBar();
     private final TableView<Quiz> table = new TableView<>();
     BorderPane root = new BorderPane();
-
-    private final String inputFilePath = "";
     private String encodedString = "";
     
     private void createDialog(QuizController c){

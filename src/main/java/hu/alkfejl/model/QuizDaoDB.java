@@ -11,9 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 public class QuizDaoDB implements QuizDao {
-    //ObservableList options = FXCollections.observableArrayList();
-
-    //private static final String DB_FILE = "jdbc:sqlite:quizDB.db";
     private static final String DB_FILE = "jdbc:sqlite:UserProject/QuizASPNET/QuizASPNET/DB/quizDB.db";
 
     private static final String INSERT_QUIZ =
