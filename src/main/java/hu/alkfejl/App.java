@@ -23,6 +23,10 @@ import javafx.stage.Stage;
 public class App extends Application {
     private final QuizController controller = new QuizControllerImpl();
     public static String azonosito = "";
+    
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -75,9 +79,4 @@ public class App extends Application {
     public static void setAzonosito(String azonosito) {
         App.azonosito = azonosito;
     }
-
-    public static void main(String[] args) {
-        launch();
-    }
-
 }
